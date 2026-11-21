@@ -1,0 +1,14 @@
+{
+  "tipos": ["Obra", "Instalación", "Mantenimiento", "Acabados", "Reposición", "Consumo interno", "Traslado", "Otro"],
+  "unidades": [
+    ["UND", "Unidad"], ["PZA", "Pieza"], ["PAR", "Par"], ["JGO", "Juego"], ["KIT", "Kit"],
+    ["DOC", "Docena"], ["CENT", "Centena"], ["MILL", "Millar"],
+    ["CAJA", "Caja"], ["PAQ", "Paquete"], ["BOL", "Bolsa"], ["SACO", "Saco"], ["FARDO", "Fardo"],
+    ["ROLLO", "Rollo"], ["BOB", "Bobina"], ["LAM", "Lámina"], ["PLANCHA", "Plancha"],
+    ["BALDE", "Balde"], ["BOT", "Botella"], ["LATA", "Lata"], ["BIDÓN", "Bidón"], ["TAMBOR", "Tambor"],
+    ["PALLET", "Pallet"], ["M", "Metro"], ["CM", "Centímetro"], ["MM", "Milímetro"], ["KM", "Kilómetro"],
+    ["M2", "Metro cuadrado"], ["CM2", "Centímetro cuadrado"], ["M3", "Metro cúbico"], ["CM3", "Centímetro cúbico"],
+    ["KG", "Kilogramo"], ["G", "Gramo"], ["MG", "Miligramo"], ["T", "Tonelada"], ["LB", "Libra"],
+    ["L", "Litro"], ["ML", "Mililitro"], ["GALÓN", "Galón"], ["PIE", "Pie"], ["PULG", "Pulgada"], ["YDA", "Yarda"]
+  ]
+}

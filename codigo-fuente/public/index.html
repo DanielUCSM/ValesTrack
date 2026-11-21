@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es-PE">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#004333">
+    <title>ValesTrack</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+    <script src="/panel.js" defer></script>
+    <script src="/vale-documento.js" defer></script>
+    <script src="/vales.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="#dashboard"><span class="brand-logo" aria-hidden="true"><img src="/logo-marca.png" alt=""></span>ValesTrack</a>
+        <button id="theme-toggle" class="quiet" type="button" aria-pressed="false">Modo oscuro</button>
+        <button id="menu-button" hidden class="quiet" type="button" aria-controls="menu" aria-expanded="false">☰ Menú</button>
+        <span id="connection" hidden class="connection" role="status">Verificando conexión…</span>
+        <span id="account" class="connection" hidden></span>
+        <button id="logout" class="quiet" type="button" hidden>Cerrar sesión</button>
+    </header>
+    <section id="login" class="login-panel" aria-labelledby="login-title">
+        <div class="login-intro">
+            <span class="login-mark" aria-hidden="true">V</span>
+            <p>ValesTrack</p>
+            <h1>Control de salida de materiales</h1>
+            <p>Consulta vales, sigue las entregas y accede a los módulos de tu perfil.</p>
+        </div>
+        <div class="login-access">
+            <h2 id="login-title">Iniciar sesión</h2>
+            <p>Ingresa las credenciales asignadas a tu cuenta.</p>
+            <form id="login-form">
+                <label>Nombre de usuario <input name="usuario" autocomplete="username" placeholder="Nombre de usuario"
+                    required maxlength="40" spellcheck="false" autocapitalize="none"></label>
+                <label>Contraseña <span class="password-field">
+                    <input id="login-password" name="contrasena" type="password" autocomplete="current-password"
+                        placeholder="Contraseña" required maxlength="256">
+                    <button type="button" id="show-password" aria-controls="login-password" aria-pressed="false">Mostrar</button>
+                </span></label>
+                <p id="login-message" class="notice error" role="alert" hidden></p>
+                <button class="primary" id="login-submit" disabled>Ingresar a ValesTrack</button>
+            </form>
+            <p class="meta">Si olvidaste tu contraseña, solicita un restablecimiento al administrador.</p>
+        </div>
+    </section>
+    <div class="layout" id="workspace" hidden>
+        <nav id="menu" aria-label="Módulos">
+            <p>Operaciones</p>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#vales">Vales de salida</a>
+            <a href="#reportes">Reportes</a>
+            <p>Catálogos</p>
+            <a href="#EMPLEADO">Empleados / Solicitantes</a>
+            <a href="#PRODUCTO">Materiales / Productos</a>
+            <a href="#AREA">Áreas</a>
+            <a href="#PROYECTO">Proyectos</a>
+            <p>Administración</p>
+            <a href="#usuarios">Usuarios</a>
+            <p>Historial</p>
+            <a href="#papelera">Papelera / Inactivos</a>
+            <a href="#auditoria">Auditoría / Triggers</a>
+        </nav>
+        <main>
+            <div class="page-heading">
+                <div><h1 id="page-title">Dashboard</h1><p id="page-subtitle"></p></div>
+                <button id="create" class="primary" type="button" hidden></button>
+            </div>
+            <p id="notice" class="notice" role="status" hidden></p>
+
+            <section id="dashboard" hidden aria-labelledby="page-title">
+                <div class="panel dashboard-controls">
+                    <label>Período <select id="dashboard-period">
+                        <option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option>
+                        <option value="90" selected>Últimos 90 días</option><option value="365">Últimos 365 días</option>
+                    </select></label>
+                    <p id="dashboard-status" class="meta" role="status"></p>
+                    <button id="dashboard-refresh" type="button">Actualizar</button>
+                </div>
+                <div id="dashboard-content"></div>
+            </section>
+            <section id="users" class="panel" hidden aria-labelledby="page-title">
+                <div class="toolbar">
+                    <label class="grow">Buscar cuenta <input id="user-search" type="search" placeholder="Usuario, nombre o rol"></label>
+                    <button id="user-create" class="primary" type="button">Nueva cuenta</button>
+                </div>
+                <p id="user-status" class="meta" role="status"></p>
+                <div id="user-table" class="scroll"></div>
+            </section>
+            <section id="records" class="panel" aria-label="Registros">
+                <div class="toolbar">
+                    <label id="trash-label" hidden>Módulo <select id="trash-module"></select><small>Elige el módulo del registro que quieres recuperar.</small></label>
+                    <label class="grow">Buscar <input id="search" type="search" aria-describedby="search-help"><small id="search-help"></small></label>
+                    <label id="status-label" hidden>Estado <select id="status"><option value="">Todos</option><option>Pendiente</option><option>Entregado</option></select><small>Selecciona el estado del vale.</small></label>
+                    <label id="area-label" hidden>Área <select id="area"></select><small>Filtra por área solicitante.</small></label>
+                    <label id="project-label" hidden>Proyecto <select id="project"></select><small>Filtra por obra o proyecto.</small></label>
+                </div>
+                <p id="record-status" class="meta" role="status"></p>
+                <div id="record-table" class="scroll"></div>
+            </section>
+
+            <section id="reports" class="panel" hidden aria-label="Reportes de la base de datos">
+                <form id="report-form" class="toolbar">
+                    <label class="grow">Reporte <select id="report" required></select></label>
+                    <button class="primary" id="run-report">Ejecutar</button>
+                </form>
+                <p id="report-message" class="meta" role="status"></p>
+                <div id="report-table" class="scroll"></div>
+            </section>
+
+            <section id="audit" class="panel" hidden aria-label="Historial de auditoría">
+                <div class="toolbar">
+                    <label>Tabla <select id="audit-table-filter"></select></label>
+                    <label>Acción <select id="audit-action-filter"><option value="">Todas</option><option>INSERT</option><option>UPDATE</option><option>BORRADO LÓGICO</option><option>RECUPERACIÓN</option><option>DELETE</option></select></label>
+                    <button id="audit-new" type="button">Volver a los recientes</button>
+                    <button id="audit-older" type="button">Ver anteriores</button>
+                </div>
+                <p id="audit-message" class="meta" role="status"></p>
+                <div id="audit-table" class="scroll"></div>
+            </section>
+        </main>
+    </div>
+    <dialog id="user-editor" aria-labelledby="user-editor-title">
+        <form id="user-form">
+            <header class="dialog-head"><h2 id="user-editor-title">Nueva cuenta</h2>
+                <button id="user-close" class="quiet" type="button">Cerrar</button></header>
+            <div class="dialog-body">
+                <div class="fields">
+                    <label>Nombre de usuario <input name="usuario" placeholder="Nombre de usuario" required maxlength="40"
+                        pattern="[A-Za-z0-9_]{1,40}" spellcheck="false" autocapitalize="none"><small>Letras, números y guiones bajos.</small></label>
+                    <label>Nombre de la persona <input name="nombre" required maxlength="100"><small>Se muestra al iniciar sesión.</small></label>
+                    <label>Rol <select name="rol" required><option value="cliente">Cliente</option><option value="operador">Operador</option><option value="admin">Administrador</option></select></label>
+                    <label>Nueva contraseña <span class="password-field">
+                        <input name="contrasena" type="password" autocomplete="new-password" minlength="12" maxlength="128"
+                            placeholder="Nueva contraseña">
+                        <button id="user-show-password" type="button" aria-pressed="false">Mostrar</button>
+                    </span><small id="user-password-help"></small></label>
+                </div>
+                <p id="user-editor-message" class="notice error" role="alert" hidden></p>
+            </div>
+            <footer class="dialog-foot"><button id="user-save" class="primary" type="submit">Guardar cuenta</button></footer>
+        </form>
+    </dialog>
+    <dialog id="new-password" aria-labelledby="new-password-title">
+        <div class="dialog-head"><h2 id="new-password-title">Contraseña asignada</h2></div>
+        <div class="dialog-body">
+            <p>Comparte esta contraseña con la persona. Se muestra una sola vez.</p>
+            <label>Contraseña <input id="issued-password" type="text" readonly></label>
+        </div>
+        <div class="dialog-foot">
+            <button id="copy-password" type="button">Copiar</button>
+            <button id="finish-password" type="button" class="primary">Listo</button>
+        </div>
+    </dialog>
+    <dialog id="editor" aria-labelledby="editor-title">
+        <form id="edit-form">
+            <header class="dialog-head">
+                <h2 id="editor-title"></h2>
+                <button id="close" class="quiet" type="button" aria-label="Cerrar formulario">Cerrar</button>
+            </header>
+            <div class="dialog-body">
+                <div id="editor-fields"></div>
+                <p id="edit-message" class="notice error" role="alert" hidden></p>
+            </div>
+            <footer class="dialog-foot">
+                <button id="print-vale" type="button" hidden>Generar vale</button>
+                <button id="deliver-vale" type="button" hidden>Marcar como entregado</button>
+                <button id="transition" type="button" hidden></button>
+                <button class="primary" id="save">Guardar cambios</button>
+            </footer>
+        </form>
+    </dialog>
+    <dialog id="status-dialog" aria-labelledby="status-title">
+        <form id="status-form">
+            <header class="dialog-head"><h2 id="status-title">Cambiar estado</h2>
+                <button type="button" id="status-close" class="quiet">Cerrar</button></header>
+            <div class="dialog-body">
+                <p id="status-description" class="meta"></p>
+                <label id="delivery-date-label">Fecha de entrega <input name="fecha" type="date"></label>
+                <label id="cancel-reason-label">Motivo de anulación <textarea name="motivo" maxlength="500" rows="3"></textarea></label>
+                <p id="status-message" class="notice error" role="alert" hidden></p>
+            </div>
+            <footer class="dialog-foot"><button id="status-submit" class="primary">Confirmar</button></footer>
+        </form>
+    </dialog>
+    <dialog id="dashboard-detail" aria-labelledby="dashboard-detail-title">
+        <div class="dialog-head"><h2 id="dashboard-detail-title">Detalle del indicador</h2>
+            <button type="button" id="dashboard-detail-close" class="quiet">Cerrar</button></div>
+        <div class="dialog-body">
+            <p id="dashboard-detail-status" class="meta" role="status"></p>
+            <div id="dashboard-detail-table" class="scroll"></div>
+        </div>
+    </dialog>
+    <dialog id="vale-print" aria-labelledby="print-title">
+        <div class="dialog-head print-toolbar"><strong id="print-title">Vale de salida de almacén</strong>
+            <div class="row-actions"><button type="button" id="print-close">Cerrar</button>
+                <button type="button" id="print-now">Abrir para imprimir</button>
+                <button type="button" id="download-vale" class="primary">Descargar PDF</button></div></div>
+        <p id="print-error" class="notice error" role="alert" hidden></p>
+        <div id="print-content"></div>
+    </dialog>
+</body>
+</html>

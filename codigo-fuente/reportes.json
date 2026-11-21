@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "nombre": "Materiales de cada vale",
+    "join": true
+  },
+  {
+    "id": 2,
+    "nombre": "Vales emitidos durante 2026",
+    "join": false
+  },
+  {
+    "id": 3,
+    "nombre": "Vales sin fecha de entrega registrada",
+    "join": false
+  },
+  {
+    "id": 4,
+    "nombre": "Comparar cantidades solicitadas, autorizadas y entregadas",
+    "join": true
+  },
+  {
+    "id": 5,
+    "nombre": "Materiales autorizados por debajo de lo solicitado",
+    "join": true
+  },
+  {
+    "id": 6,
+    "nombre": "Diez productos con mayor cantidad solicitada",
+    "join": true
+  },
+  {
+    "id": 7,
+    "nombre": "Productos que no aparecen en ningun vale",
+    "join": true
+  },
+  {
+    "id": 8,
+    "nombre": "Vales solicitados por empleado",
+    "join": true
+  },
+  {
+    "id": 9,
+    "nombre": "Vales asignados al responsable de despacho",
+    "join": true
+  },
+  {
+    "id": 10,
+    "nombre": "Vales y lineas de detalle por area",
+    "join": true
+  },
+  {
+    "id": 11,
+    "nombre": "Vales y productos distintos por proyecto",
+    "join": true
+  },
+  {
+    "id": 12,
+    "nombre": "Vales emitidos por mes",
+    "join": false
+  },
+  {
+    "id": 13,
+    "nombre": "Vales con alguna firma sin registrar",
+    "join": false
+  },
+  {
+    "id": 14,
+    "nombre": "Cantidades autorizadas pendientes de entrega",
+    "join": true
+  }
+]

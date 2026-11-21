@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+conexion.env
+node_modules/
+
+.cuentas.json
+.neon

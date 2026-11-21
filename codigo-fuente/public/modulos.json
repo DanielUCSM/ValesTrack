@@ -1,0 +1,26 @@
+{
+  "EMPLEADO": {
+    "nombre": "Empleados / Solicitantes", "singular": "empleado", "boton": "Agregar solicitante / empleado",
+    "clave": "id_empleado",
+    "campos": [
+      ["id_empleado", "ID", "integer", 0, true],
+      ["primer_nombre", "Primer nombre", "text", 50, true],
+      ["segundo_nombre", "Segundo nombre", "text", 50, false],
+      ["apellido_paterno", "Apellido paterno", "text", 60, true],
+      ["apellido_materno", "Apellido materno", "text", 60, true]
+    ]
+  },
+  "PRODUCTO": {
+    "nombre": "Materiales / Productos", "singular": "material", "boton": "Agregar material / producto",
+    "clave": "codigo_producto",
+    "campos": [["codigo_producto", "Código", "text", 20, true], ["descripcion_material", "Descripción", "text", 250, true], ["unidad", "Unidad", "text", 20, true]]
+  },
+  "AREA": {
+    "nombre": "Áreas", "singular": "área", "boton": "Agregar área", "clave": "id_area",
+    "campos": [["id_area", "ID", "integer", 0, true], ["nombre", "Nombre", "text", 100, true]]
+  },
+  "PROYECTO": {
+    "nombre": "Proyectos", "singular": "proyecto", "boton": "Agregar proyecto", "clave": "id_proyecto",
+    "campos": [["id_proyecto", "ID", "integer", 0, true], ["nombre", "Nombre", "text", 150, true]]
+  }
+}

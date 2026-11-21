@@ -1,0 +1,16 @@
+{
+  "name": "valestrack",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node compartido.js",
+    "cuentas": "node preparar-cuentas.js",
+    "build": "node verificar-build.js"
+  },
+  "dependencies": {
+    "@neon/config": "^1.14.6",
+    "@neon/env": "^2.1.9",
+    "pg": "^8.23.1"
+  }
+}
